@@ -20,7 +20,7 @@
     int sy = 2012;
     
 	if(!type.equals("mood")){
-		sd = 29; sm= 1; sy =2012;
+		sd = 25; sm= 2; sy =2012;
 	}
 
 	int k = 1;   // moving average for k days
