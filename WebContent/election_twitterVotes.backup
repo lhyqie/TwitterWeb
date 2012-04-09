@@ -39,7 +39,7 @@
 	ResultSet rs = null;
 	String sql = null ;
 	try{
-		sql = "select distinct Date(`time`) as aDate, sum(Obama) as cObama, sum(Terry) as cTerry, sum(Romney) as cRomney, sum(Santorum) as cSantorum, sum(Gingrich) as cGingrich, sum(Paul) as cPaul from election_timeseries "+" group by Date(`time`)";
+		sql = "select distinct Date(`time`) as aDate, sum(Obama) as cObama, sum(Terry) as cTerry, sum(Romney) as cRomney, sum(Santorum) as cSantorum, sum(Gingrich) as cGingrich, sum(Paul) as cPaul from election_timeseries where `time` >=" + fromDate.getTime().getTime() +" group by Date(`time`)";
 		rs = statement.executeQuery(sql);											
 	    System.out.println(sql);
 		
@@ -88,7 +88,8 @@
 					chart: {
 						renderTo: 'container',
 						defaultSeriesType: 'line',
-						marginBottom: 80
+						marginRight: 130,
+						marginBottom: 25
 					},
 					title: {
 						text: 'Twitter Mentions of the Candidates in 2012 Election',
@@ -99,18 +100,36 @@
 						x: -20
 					},
 					xAxis: {
-						type: 'datetime',
-					    labels: {
-			                rotation: 270,
-			                y:30
-			            }
+						endOnTick : false,
+					    tickInterval: <%=(int)(dataSet.close.length/8)%>,
+						maxZoom: 20 * 1000,
+						categories: [<%
+						                  DateFormat dateFormat = new SimpleDateFormat("MM/dd/YY");
+									      for(int i = 0 ; i< dates.size(); i++){
+									    	   //System.out.println(dataSet.date[i]);
+									    	   //System.out.println(dateFormat.format(dataSet.date[i]));
+										       out.print("'"+dateFormat.format(dates.get(i))+"'"  + (i < dates.size()-1? ",":""));
+										       //System.out.print("'"+dateFormat.format(dataSet.date[i])+"'"  + (i < dataSet.close.length-1? ",":""));
+									      }
+									%>]
 					},
 					yAxis: [{
 						title: {
 							text: 'Twitter Votes'
 						},
-			
+						plotLines: [{
+							value: 0,
+							width: 1,
+							color: '#808080'
+						}],
+		
 					}],
+					tooltip: {
+						formatter: function() {
+				                return '<b>'+ this.series.name +'</b><br/>'+
+								this.x +': '+' '+ this.y ;
+						}
+					},
 					legend: {
 						align: 'right',
 						verticalAlign: 'top',
@@ -126,7 +145,7 @@
 									        
 												for(int i = 0; i<voteSeries.size(); i++){
 													ArrayList<Integer> votes = voteSeries.get(i);
-													out.print("[Date.UTC("+(dates.get(i).getYear()+1900)+","+dates.get(i).getMonth()+","+dates.get(i).getDate()+"),"+votes.get(k)+(i < voteSeries.size()-1? "],":"]"));
+													out.println(""+ votes.get(k)+(i < voteSeries.size()-1? ",":""));
 												}
 												rs.close();
 												statement.close();

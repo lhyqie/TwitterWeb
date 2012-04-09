@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="data.*" %>
@@ -14,19 +15,31 @@
 	   type = "mood";
 	}
 
-    int sd = 27;
-    int sm = 1;  //month 1 means Feb
+    int sd = 12;
+    int sm = 2;  //month 1 means Feb
     int sy = 2012;
     
 	if(!type.equals("mood")){
-		sd = 26; sm= 2; sy =2012;
+		sd = 29; sm= 1; sy =2012;
 	}
 
+	int k = 1;   // moving average for k days
+	if (request.getParameter("k") != null) {
+		   k = Integer.parseInt(request.getParameter("k"));
+	}
+	
+	int lead = 0; //the leading time of Twitter
+	if (request.getParameter("lead") != null) {
+		lead = Integer.parseInt(request.getParameter("lead"));
+	}
+	
 	Calendar fromDate = new GregorianCalendar(sy,sm,sd,0,0);
     Calendar now = Calendar.getInstance();
     int ed = now.get(Calendar.DATE);
     int em = now.get(Calendar.MONTH);
     int ey = now.get(Calendar.YEAR);
+    
+    java.sql.Date fromDataSQL = new Date(sy-1900,sm,sd);
 	HighLowDataSet dataSet = StockDatasetFactory2.createHighLowDatasetByDay("^DJI",sm,sd,sy,em,ed,ey);
     //out.println(dartaSet);
 	// store all the dates 
@@ -54,14 +67,16 @@
 	String sql = null ;
     //rs = statement.executeQuery("SELECT time, MONTH(`time`) as month, DAY(`time`) as day, HOUR(`time`) as h, MINUTE(`time`) AS m, COUNT(*) as cnt FROM //tweet GROUP BY month,day, h, m order by month desc, day desc, h desc, m desc  limit 0,1");
 	try{
-		sql = "select distinct Date(`time`) as aDate, sum(pos) as cPos, sum(neg) as cneg,  sum(alert_pos) as cAlertPos, sum(alert_neg) as cAlertNeg, sum(calm_pos) as cCalmPos, sum(calm_neg) as cCalmNeg, sum(sure_pos) as cSurePos, sum(sure_neg) as cSureNeg, sum(vital_pos) as cVitalPos, sum(vital_neg) as cVitalNeg, sum(kind_pos) as cKindPos, sum(kind_neg) as cKindNeg, sum(happy_pos) as cHappyPos, sum(happy_neg) as cHappyNeg from opinion_timeseries where `time` >=" + fromDate.getTime().getTime() +" and type ='"+type+"' group by Date(`time`)";
+		sql = "select distinct Date(`time`) as aDate, sum(pos) as cPos, sum(neg) as cneg,  sum(alert_pos) as cAlertPos, sum(alert_neg) as cAlertNeg, sum(calm_pos) as cCalmPos, sum(calm_neg) as cCalmNeg, sum(sure_pos) as cSurePos, sum(sure_neg) as cSureNeg, sum(vital_pos) as cVitalPos, sum(vital_neg) as cVitalNeg, sum(kind_pos) as cKindPos, sum(kind_neg) as cKindNeg, sum(happy_pos) as cHappyPos, sum(happy_neg) as cHappyNeg from opinion_timeseries where `time` >='" + fromDataSQL +"' and type ='"+type+"' group by Date(`time`)";
 		rs = statement.executeQuery(sql);											
-	   //out.println(sql);
+	    //out.println(sql);
 		
 		while(rs.next()){
 			java.util.Date d = rs.getDate("aDate");
+			  
+			   d.setTime(d.getTime() + lead * 24 * 60 * 60 * 1000);
 			   dates.add(d);
-			   
+	
 			   allPos.add(rs.getLong("cPos")); 
 			   allNeg.add(rs.getLong("cNeg"));
 			   
@@ -141,7 +156,6 @@
 					},
 					xAxis: {
 						type: 'datetime',
-						
 					    labels: {
 			                rotation: 270,
 			                y:30
@@ -198,12 +212,16 @@
 						name: 'OpinionLexicon',
 						data: [<%
 								        
-											for(int i = 0; i<allPos.size(); i++){
-												double d = (double)(allPos.get(i))/(allNeg.get(i)+allPos.get(i)+1);
-												d = (double)((int)(d*100))/100;
+											for(int i = k - 1; i < allPos.size(); i++){
+												double ave = 0.0;
 												//out.println(""+ d + (i!= allPos.size()-1 ? ",":"") );
-												
-												out.print("[Date.UTC("+(dates.get(i).getYear()+1900)+","+dates.get(i).getMonth()+","+dates.get(i).getDate()+"),"+ d +"],");
+												for(int j = 0 ; j <= k - 1 ; j++){
+													double d = (double)(allPos.get(i-j))/(allNeg.get(i-j)+allPos.get(i-j)+1);
+													ave +=d;
+												}
+												ave/=k;
+												ave = (double)((int)(ave*1000))/1000;
+												out.print("[Date.UTC("+(dates.get(i).getYear()+1900)+","+dates.get(i).getMonth()+","+dates.get(i).getDate()+"),"+ ave +"],");
 											}
 											rs.close();
 											statement.close();
@@ -212,15 +230,20 @@
 									    
 						      %>],
 						yAxis: 1
-					},<% for(int k = 0 ; k <6; k++) {%>
+					},<% for(int t = 0 ; t <6; t++) {%>
 					  {
-						name: '<%out.print(GPOMS_Name[k]);%>',
+						name: '<%out.print(GPOMS_Name[t]);%>',
 						data: [<%
 								        
-											for(int i = 0; i<allPos_GPOMS.get(k).size(); i++){
-												double d = (double)(allPos_GPOMS.get(k).get(i))/(allNeg_GPOMS.get(k).get(i)+allPos_GPOMS.get(k).get(i)+1);
-												d = (double)((int)(d*100))/100;
-												out.print("[Date.UTC("+(dates.get(i).getYear()+1900)+","+dates.get(i).getMonth()+","+dates.get(i).getDate()+"),"+ d +"],");
+											for(int i = k - 1; i<allPos_GPOMS.get(t).size(); i++){
+												double ave = 0.0;
+												for(int j = 0 ; j <= k - 1 ; j++){
+													double d = (double)(allPos_GPOMS.get(t).get(i-j))/(allNeg_GPOMS.get(t).get(i-j)+allPos_GPOMS.get(t).get(i-j)+1);
+													ave +=d;
+												}
+												ave/=k;
+												ave = (double)((int)(ave*1000))/1000;
+												out.print("[Date.UTC("+(dates.get(i).getYear()+1900)+","+dates.get(i).getMonth()+","+dates.get(i).getDate()+"),"+ ave +"],");
 											}
 											rs.close();
 											statement.close();
