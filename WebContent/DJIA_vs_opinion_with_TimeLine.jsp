@@ -49,7 +49,7 @@
 	LinkedList< LinkedList<Long> > allPos_GPOMS = new LinkedList< LinkedList<Long> >();
 	LinkedList< LinkedList<Long> > allNeg_GPOMS = new LinkedList< LinkedList<Long> >();
 	//String GPOMS_Name[] = {"Calm", "Sure","Vital","Kind","Happy","Alert"};
-	String GPOMS_Name[] = {"Predict1", "Predict2","Vital","Kind","Happy","Alert"};
+	String GPOMS_Name[] = {"predictor1", "predictor2","Vital","Kind","Happy","Alert"};
 	for(int i = 0; i <6; i++){
 		allPos_GPOMS.add(new LinkedList<Long>());
 		allNeg_GPOMS.add(new LinkedList<Long>());
@@ -290,6 +290,6 @@
 		<div id="container" style="width: 1000px; height: 600px; "></div>
 		<br>
 		<div> 1. Click the name of the category in the legend to show or hide the corresponding plot. <br>
-		      2. Predict1 and Predict2 are computed by some algorithm using terms in OpinionLexicon. And OpinionLexicon is from <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html">here</a> <br>
+		      2. Predictor1 and Predictor2 are computed with an algorithm using two subsets of terms from our <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"> sentiment lexicon </a> <br>
 	</body>
 </html>

@@ -95,7 +95,7 @@
 						x: -20 //center
 					},
 					subtitle: {
-						text: 'Source: Yahoo! Finance & Twitter.com',
+						text: 'Source: Twitter.com',
 						x: -20
 					},
 					xAxis: {
