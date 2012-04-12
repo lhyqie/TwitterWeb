@@ -48,7 +48,8 @@
 	LinkedList<Long> allNeg = new LinkedList<Long>();  // all counts of negative words
 	LinkedList< LinkedList<Long> > allPos_GPOMS = new LinkedList< LinkedList<Long> >();
 	LinkedList< LinkedList<Long> > allNeg_GPOMS = new LinkedList< LinkedList<Long> >();
-	String GPOMS_Name[] = {"Calm", "Sure","Vital","Kind","Happy","Alert"};
+	//String GPOMS_Name[] = {"Calm", "Sure","Vital","Kind","Happy","Alert"};
+	String GPOMS_Name[] = {"Predict1", "Predict2","Vital","Kind","Happy","Alert"};
 	for(int i = 0; i <6; i++){
 		allPos_GPOMS.add(new LinkedList<Long>());
 		allNeg_GPOMS.add(new LinkedList<Long>());
@@ -166,7 +167,7 @@
 							text: 'DJIA'
 						},
 						labels: {
-			                y:-100
+			                y:0
 			            }
 						
 					},{
@@ -208,10 +209,13 @@
 						          }
 						
 						      %>]
-					},{
-						name: 'OpinionLexicon',
-						data: [<%
-								        
+					},
+					//  {  //only show calm and sure
+					//	name: 'OpinionLexicon',
+					//	data: 
+					//	[
+						  <%
+				          /* 				        
 											for(int i = k - 1; i < allPos.size(); i++){
 												double ave = 0.0;
 												//out.println(""+ d + (i!= allPos.size()-1 ? ",":"") );
@@ -226,11 +230,15 @@
 											rs.close();
 											statement.close();
 											connection.close();
-										      
+						   */				      
 									    
-						      %>],
-						yAxis: 1
-					},<% for(int t = 0 ; t <6; t++) {%>
+						      %>
+					//	      ],
+					//	yAxis: 1
+					//},
+					 <% //for(int t = 0 ; t <6; t++) { //only show calm and sure
+						 for(int t = 0 ; t <2; t++) {
+					  %>
 					  {
 						name: '<%out.print(GPOMS_Name[t]);%>',
 						data: [<%
@@ -277,7 +285,6 @@
 		<div id="container" style="width: 1000px; height: 600px; "></div>
 		<br>
 		<div> 1. Click the name of the category in the legend to show or hide the corresponding plot. <br>
-		      2. OpinionLexicon is from <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html">here</a> <br>
-              3. Sentiment words in each category (Calm, Sure, Vital, Kind, Happy, and Alert) are a subset of  OpinionLexicon. </div>
+		      2. Predict1 and Predict2 are computed by some algorithm using terms in OpinionLexicon. And OpinionLexicon is from <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html">here</a> <br>
 	</body>
 </html>
