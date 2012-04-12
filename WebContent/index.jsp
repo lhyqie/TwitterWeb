@@ -40,8 +40,11 @@
 					<p><a href="tweets_per_second.jsp">chart 1: Tweets per second by the crawler 1 (tracking mood, election, finance/economy)</a></p>
 					<p><a href="tweets_per_second2.jsp">chart 2: Tweets per second by the crawler 2 (random tweets 1% of overall)</a></p>
 					<p><a href="DJIA_vs_opinion.jsp?type=mood">chart 3: Twitter social Mood v.s. DJIA </a></p>
-					<p><a href="election_twitterVotes.jsp?type=election">chart 4: Twitter "Votes" in election for 6 candidates </a></p>
-					<p><a href="DJIA_vs_opinion.jsp?type=finance-economy">chart 5: Twitter opinion in finance/economy v.s. DJIA </a></p>
+					<p><a href="DJIA_vs_opinion_with_TimeLine.jsp?type=mood">chart 4: Twitter social Mood v.s. DJIA (With Timeline)</a></p>
+					<p><a href="election_twitterVotes.jsp?type=election">chart 5: Twitter "Votes" in election for 6 candidates </a></p>
+					<p><a href="election_twitterVotes_with_TimeLine.jsp?type=election">chart 6: Twitter "Votes" in election for 6 candidates(With Timeline)</a></p>
+					<p><a href="DJIA_vs_opinion.jsp?type=finance-economy">chart 7: Twitter opinion in finance/economy v.s. DJIA </a></p>
+					<p><a href="DJIA_vs_opinion_with_TimeLine.jsp?type=finance-economy">chart 8: Twitter opinion in finance/economy v.s. DJIA (With Timeline) </a></p>
 					<p>&nbsp;</p>
 					<p>&nbsp;</p>
 					<p>&nbsp;</p>
