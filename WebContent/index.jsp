@@ -45,11 +45,7 @@
 					<p><a href="election_twitterVotes_with_TimeLine.jsp?type=election">chart 6: Twitter "Votes" in election for 6 candidates(With Timeline)</a></p>
 					<p><a href="DJIA_vs_opinion.jsp?type=finance-economy">chart 7: Twitter opinion in finance/economy v.s. DJIA </a></p>
 					<p><a href="DJIA_vs_opinion_with_TimeLine.jsp?type=finance-economy">chart 8: Twitter opinion in finance/economy v.s. DJIA (With Timeline) </a></p>
-					<p>&nbsp;</p>
-					<p>&nbsp;</p>
-					<p>&nbsp;</p>
-					<p>&nbsp;</p>
-		
+					<p><a href="Gallup_vs_Twitter_with_TimeLine.jsp">chart 9: Twitter Sentiments v.s. Gallup Job Creation Index and Economic Confidence Index </a></p>
 					<p>&nbsp;</p>
 					<p>&nbsp;</p>
 				</div>
