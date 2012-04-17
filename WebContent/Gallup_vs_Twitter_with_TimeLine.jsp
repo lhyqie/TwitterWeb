@@ -212,7 +212,7 @@
 		<div id="container" style="width: 1000px; height: 600px; "></div>
 		<br>
 		<div> 1. Click the name of the category in the legend to show or hide the corresponding plot. <br>
-		      2. ratio of Twitter Sentiments is computed using terms from <a href="http://www.cs.pitt.edu/mpqa/subj_lexicon.html"> Subjectivity Lexicon </a> by University of Pittsburgh <br>
+		      2. ratio of Twitter Sentiments is computed with an algorithm using terms from our <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"> sentiment lexicon </a> <br>
 		      3. The ratio of Twitter Sentiments is real time, but there is a lag for the two indices of Gallup. And the index is based on a 3-days rolling average. (For example, the index value of April 12 is essentially an average of April 10 to April 12).
 	</body>
 </html>

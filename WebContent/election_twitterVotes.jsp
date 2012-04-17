@@ -25,7 +25,7 @@
     int ed = now.get(Calendar.DATE);
     int em = now.get(Calendar.MONTH);
     int ey = now.get(Calendar.YEAR);
-	HighLowDataSet dataSet = StockDatasetFactory2.createHighLowDatasetByDay("^DJI",sm,sd,sy,em,ed,ey);
+	//HighLowDataSet dataSet = StockDatasetFactory2.createHighLowDatasetByDay("^DJI",sm,sd,sy,em,ed,ey);
     //out.println(dartaSet);
 	// store all the dates 
 	
@@ -84,6 +84,9 @@
 		
 			var chart;
 			$(document).ready(function() {
+				Highcharts.setOptions({
+			        colors: ['#FF0000','#058DC7', '#000000', '#707070', '#DDDF00', '#24CBE5', '#64E572', '#FF9655']
+				});
 				chart = new Highcharts.Chart({
 					chart: {
 						renderTo: 'container',

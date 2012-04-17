@@ -160,7 +160,34 @@
 					    labels: {
 			                rotation: 270,
 			                y:30
-			            }
+			            },
+			            plotBands:[  // mark the weekend
+				                        <%
+				                        ArrayList<java.util.Date> saturdays = new ArrayList<java.util.Date>();
+				                     	ArrayList<java.util.Date> sundays = new ArrayList<java.util.Date>();
+				                     	for (int i = 0; i < dates.size(); i++) {
+				                     		
+				                 			if(dates.get(i).getDay()==5){
+				                 				saturdays.add(dates.get(i));
+				                 				continue;
+				                 			}
+				                 			if(dates.get(i).getDay()==1){
+				                 				if(saturdays.size() > 0)
+				          							sundays.add(dates.get(i));
+				                 				continue;
+				                 			}
+				                 		}
+				                     	
+				                     	for(int i = 0; i< Math.min(saturdays.size(),sundays.size()); i++){
+				                     		out.println("{");
+				                     		out.println(" color: '#FCFFC5',");
+				                     		out.println("from: Date.UTC("+(saturdays.get(i).getYear()+1900)+","+saturdays.get(i).getMonth()+","+saturdays.get(i).getDate()+"),");
+				                     		out.println("to: Date.UTC("+(sundays.get(i).getYear()+1900)+","+sundays.get(i).getMonth()+","+sundays.get(i).getDate()+"),");
+				                     		out.println("},");
+				                     	}
+				                 		%>
+				           			
+				            ]
 					},
 					yAxis: [{
 						title: {
@@ -290,6 +317,7 @@
 		<div id="container" style="width: 1000px; height: 600px; "></div>
 		<br>
 		<div> 1. Click the name of the category in the legend to show or hide the corresponding plot. <br>
-		      2. Predictor1 and Predictor2 are computed with an algorithm using two subsets of terms from our <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"> sentiment lexicon </a> <br>
+		      2. Area in shadow represents weekends. <br>
+		      3. Predictor1 and Predictor2 are computed with an algorithm using two subsets of terms from our <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"> sentiment lexicon </a> <br>
 	</body>
 </html>

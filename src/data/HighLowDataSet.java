@@ -6,7 +6,7 @@ package data;
 
 
 import java.util.Date;
-
+import java.util.ArrayList;
 /**
  *
  * @author Huayi
@@ -72,5 +72,23 @@ public class HighLowDataSet {
             if(date[i].equals(theDate) || date[i-1].compareTo(theDate)<0 && date[i].compareTo(theDate)>0)return i;
         }
         return -1;
+    }
+    public String weekendCodesForHighChart(){
+    	String ret = "";
+    	ArrayList<Date> saturdays = new ArrayList<Date>();
+    	ArrayList<Date> sundays = new ArrayList<Date>();
+    	for (int i = 0; i < date.length; i++) {
+			if(date[i].getDay()==6){
+				saturdays.add(date[i]);
+				continue;
+			}
+			if(date[i].getDay()==0){
+				sundays.add(date[i]);
+				continue;
+			}
+		}
+    	//System.out.println(saturdays);
+    	//System.out.println(sundays);
+    	return ret;
     }
 }

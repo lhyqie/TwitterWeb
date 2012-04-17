@@ -81,7 +81,7 @@
 		
 		<!-- 2. Add the JavaScript to initialize the chart on document ready -->
 		<script type="text/javascript">
-		
+			
 			var chart;
 			$(document).ready(function() {
 				chart = new Highcharts.Chart({
