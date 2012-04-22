@@ -148,7 +148,7 @@
 						marginBottom: 80
 					},
 					title: {
-						text: 'Dow Jones Industrial Average (DJIA) v.s. # of Twitter Sentiments',
+						text: 'Daily Prediction: Dow Jones Industrial Average (DJIA) v.s. Twitter Sentiment',
 						x: -20 //center
 					},
 					subtitle: {
@@ -201,7 +201,7 @@
 					},{
 						opposite: true,
 						title: {
-							text: 'ratio of Positive to Postive + Negative'
+							text: 'Twitter Sentiment'
 						},
 					}],
 					legend: {
@@ -314,10 +314,11 @@
 			</FORM>  
 		</div>
 		<!-- 3. Add the container -->
-		<div id="container" style="width: 1000px; height: 600px; "></div>
+		<div id="container" style="width: 1200px; height: 600px; " align="center"></div>
 		<br>
-		<div> 1. Click the name of the category in the legend to show or hide the corresponding plot. <br>
-		      2. Area in shadow represents weekends. <br>
-		      3. Predictor1 and Predictor2 are computed with an algorithm using two subsets of terms from our <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"> sentiment lexicon </a> <br>
+		<div style="margin-left:100px;"> 1. Please look at the trends, not the absoluate values <br>
+		      2. Click the name of the category in the legend to show or hide the corresponding plot. <br>
+		      3. Shaded areas represent weekends. <br>
+		      4. Predictor1 and Predictor2 are computed with an algorithm using two subsets of terms from our <a href="http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"> sentiment lexicon </a> <br>
 	</body>
 </html>
